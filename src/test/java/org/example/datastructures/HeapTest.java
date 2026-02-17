@@ -1,10 +1,12 @@
 package org.example.datastructures;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.example.utils.PrintUtils.printHeap;
 import static org.junit.Assert.*;
 
 public class HeapTest {
@@ -13,37 +15,52 @@ public class HeapTest {
     public void bubbleUp() {
         Heap<Integer> heap = new Heap<>(List.of(2, 4, 7, 6, 5, 6, 8, 9, 10));
         printHeap(heap);
+        Assert.assertFalse(heap.validate());
         heap.bubbleUp(5);
         printHeap(heap);
+        Assert.assertTrue(heap.validate());
     }
 
     @Test
     public void bubbleDown() {
         Heap<Integer> heap = new Heap<>(List.of(15, 2, 5, 9, 11, 5, 8, 12, 19));
         printHeap(heap);
+        Assert.assertFalse(heap.validate());
         heap.bubbleDown(0);
         printHeap(heap);
+        Assert.assertTrue(heap.validate());
     }
 
-    private void printHeap(Heap<Integer> heap) {
-        List<StringBuilder> lines = new ArrayList<>();
-        int levels = (int) (Math.floor(log2(heap.size())) + 1);
-        for (int i = 0; i < levels; i++) {
-            lines.add(new StringBuilder());
-        }
-        for (int i = 0; i < heap.size(); i++) {
-            int level = (int) Math.floor(log2(i + 1));
-            lines.get(level).append(heap.get(i)).append(", ");
-            for (int j = level - 1; j >= 0; j--) {
-                lines.get(j).append(" ").insert(0, " ");
-            }
-        }
-        for (StringBuilder line: lines) {
-            System.out.println(line.toString());
-        }
+    @Test
+    public void add() {
+        Heap<Integer> heap = new Heap<>(List.of(2, 4, 6, 6, 5, 7, 8, 9, 10));
+        printHeap(heap);
+        Assert.assertTrue(heap.validate());
+        heap.add(1);
+        printHeap(heap);
+        Assert.assertTrue(heap.validate());
     }
 
-    private double log2(int x) {
-        return Math.log(x)/Math.log(2);
+    @Test
+    public void remove() {
+        Heap<Integer> heap = new Heap<>(List.of(2, 4, 6, 6, 5, 7, 8, 9, 10));
+        printHeap(heap);
+        Assert.assertTrue(heap.validate());
+        Integer removed = heap.remove(3);
+        printHeap(heap);
+        Assert.assertNotNull(removed);
+        Assert.assertEquals(6, removed.intValue());
+        Assert.assertTrue(heap.validate());
+    }
+
+    @Test
+    public void heapify() {
+        List<Integer> list = List.of(1, 9, 15, 8, 6, 7, 3);
+        Heap<Integer> minHeap = Heap.heapify(list, false);
+        printHeap(minHeap);
+        Assert.assertTrue(minHeap.validate());
+        Heap<Integer> maxHeap = Heap.heapify(list, true);
+        printHeap(maxHeap);
+        Assert.assertTrue(maxHeap.validate());
     }
 }

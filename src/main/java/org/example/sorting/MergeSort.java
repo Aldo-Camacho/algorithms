@@ -1,15 +1,26 @@
 package org.example.sorting;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MergeSort {
-    public static <E extends Comparable<E>> void sort(List<E> input, int  p, int r, E maxTypeValue) {
+    public static <E extends Comparable<E>> void sort(List<E> input, E maxTypeValue) {
+        sort(input, 0, input.size() - 1, maxTypeValue);
+    }
+
+    public static <E extends Comparable<E>> void sort(List<E> input, int p, int r, E maxTypeValue) {
         if (p < r) {
-            int q = (p + r) / 2;
-            sort(input, p, q, maxTypeValue);
-            sort(input, q + 1, r, maxTypeValue);
-            merge(input, p, q, r, maxTypeValue);
+            if (r == p + 1) {
+                if (input.get(r).compareTo(input.get(p)) < 0) {
+                    Collections.swap(input, r, p);
+                }
+            } else {
+                int q = (p + r) / 2;
+                sort(input, p, q, maxTypeValue);
+                sort(input, q + 1, r, maxTypeValue);
+                merge(input, p, q, r, maxTypeValue);
+            }
         }
     }
 
