@@ -4,20 +4,30 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PolynomialRollingHash {
-    public static long hash(String input, long p, long m) {
+    public static BigInteger hash(String input, BigInteger p, BigInteger m) {
         byte[] inputBytes = input.getBytes();
-        List<Long> outArr = new ArrayList<>();
+        List<BigInteger> outArr = new ArrayList<>();
         for (int i = 0; i < inputBytes.length; i++) {
-            long pPow = (long) Math.pow(p, i);
-            long in = inputBytes[i];
-            outArr.add((pPow * in) % m);
+            BigInteger pPow = p.pow(inputBytes.length - i - 1);
+            BigInteger in = BigInteger.valueOf(inputBytes[i]);
+            outArr.add(pPow.multiply(in).mod(m));
         }
-        return outArr.stream().reduce(Long::sum).orElseThrow(RuntimeException::new);
+        return outArr.stream().reduce(BigInteger::add).orElseThrow(RuntimeException::new);
+    }
+
+    public static BigInteger hashE(String input, BigInteger p, BigInteger m) {
+        byte[] inputBytes = input.getBytes();
+        BigInteger hash = BigInteger.ZERO;
+        for (byte inputByte : inputBytes) {
+            hash = hash.multiply(p).add(BigInteger.valueOf(inputByte)).mod(m);
+        }
+        return hash;
     }
 
     public static <E extends Serializable> long hash(E input, long p, long m) throws IOException {

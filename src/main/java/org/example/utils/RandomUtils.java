@@ -12,7 +12,7 @@ public class RandomUtils {
         return random;
     }
 
-    public static long randomPrimeLong() {
-        return BigInteger.probablePrime(63, secRandom).longValueExact();
+    public static BigInteger randomPrime(int bits) {
+        return BigInteger.probablePrime(bits - 1, secRandom);
     }
 }

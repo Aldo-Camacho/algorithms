@@ -3,6 +3,8 @@ package org.example.utils;
 import org.example.datastructures.Heap;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HexFormat;
 import java.util.List;
 
 public class PrintUtils {
@@ -42,6 +44,32 @@ public class PrintUtils {
             list.forEach(i -> sb.append(i).append(", "));
         }
         sb.replace(sb.lastIndexOf(", "), sb.length(), "]");
+        System.out.println(sb);
+    }
+
+    public static void printStrList(List<String> list) {
+        printStrList(list, 50);
+    }
+
+    public static void printStrList(List<String> list, int maxElements) {
+        StringBuilder sb = new StringBuilder("[");
+        if (list.size() > maxElements) {
+            for (int i = 0; i < maxElements; i++) {
+                sb.append(list.get(i)).append(", ");
+            }
+        } else {
+            list.forEach(i -> sb.append(i).append(", "));
+        }
+        sb.replace(sb.lastIndexOf(", "), sb.length(), "]");
+        System.out.println(sb);
+    }
+
+    public static void printBytes(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        HexFormat hex = HexFormat.of();
+        for (byte b : bytes) {
+            sb.append(hex.toHexDigits(b));
+        }
         System.out.println(sb);
     }
 }

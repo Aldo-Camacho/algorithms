@@ -56,6 +56,7 @@ public class HeapTest {
     @Test
     public void heapify() {
         List<Integer> list = List.of(1, 9, 15, 8, 6, 7, 3);
+        printHeap(new Heap<>(list));
         Heap<Integer> minHeap = Heap.heapify(list, false);
         printHeap(minHeap);
         Assert.assertTrue(minHeap.validate());
