@@ -1,18 +1,13 @@
 package org.example.search;
 
-import org.example.sorting.QuickSort;
-import org.example.utils.PrintUtils;
 import org.example.utils.RandomUtils;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class QuickSelectTest {
 

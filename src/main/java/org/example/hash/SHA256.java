@@ -2,6 +2,8 @@ package org.example.hash;
 
 import java.util.Arrays;
 
+import static org.example.utils.BitwiseUtils.rightRotate;
+
 public class SHA256 {
     public static final int H0 = 0x6a09e667;
     public static final int H1 = 0xbb67ae85;
@@ -82,13 +84,5 @@ public class SHA256 {
             hash[4*i + 3] = (byte) ((hTotal[i]) & 0xFF);
         }
         return hash;
-    }
-
-    private static int rightRotate(int i, int bits) {
-        return (i >>> bits) | (i << (32 - bits));
-    }
-
-    private static int leftRotate(int i, int bits) {
-        return (i << bits) | (i >>> (32 - bits));
     }
 }

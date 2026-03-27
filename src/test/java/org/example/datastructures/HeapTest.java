@@ -3,11 +3,9 @@ package org.example.datastructures;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.example.utils.PrintUtils.printHeap;
-import static org.junit.Assert.*;
 
 public class HeapTest {
 

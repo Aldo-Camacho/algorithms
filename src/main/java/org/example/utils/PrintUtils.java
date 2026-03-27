@@ -3,7 +3,6 @@ package org.example.utils;
 import org.example.datastructures.Heap;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HexFormat;
 import java.util.List;
 
