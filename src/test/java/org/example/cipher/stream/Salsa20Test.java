@@ -1,4 +1,4 @@
-package org.example.cipher;
+package org.example.cipher.stream;
 
 import org.bouncycastle.crypto.engines.Salsa20Engine;
 import org.bouncycastle.crypto.params.KeyParameter;
@@ -58,10 +58,9 @@ public class Salsa20Test {
         KeyParameter keyParam = new KeyParameter(key);
         ParametersWithIV ivParams = new ParametersWithIV(keyParam, nonce);
 
-        bcEngine.init(true, ivParams);
-
         byte[] ciphertext = new byte[plaintext.length];
         long strt = System.currentTimeMillis();
+        bcEngine.init(true, ivParams);
         bcEngine.processBytes(plaintext, 0, plaintext.length, ciphertext, 0);
         long fnsh = System.currentTimeMillis();
         PrintUtils.printBytes(ciphertext);

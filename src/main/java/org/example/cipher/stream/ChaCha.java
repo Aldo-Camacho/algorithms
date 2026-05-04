@@ -1,4 +1,4 @@
-package org.example.cipher;
+package org.example.cipher.stream;
 
 import java.nio.charset.StandardCharsets;
 

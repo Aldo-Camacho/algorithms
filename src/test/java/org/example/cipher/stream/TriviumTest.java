@@ -1,48 +1,26 @@
-package org.example.cipher;
+package org.example.cipher.stream;
 
 import org.example.utils.PrintUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.ChaCha20ParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
-
-
-class ChaChaTest {
-    private static final byte[] KEY = hexStringToByteArray("000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f");
-    private static final byte[] NONCE = hexStringToByteArray("000000000000004a00000000");
+class TriviumTest {
+    private static final byte[] KEY = hexStringToByteArray("00000000000000000000");
+    private static final byte[] NONCE = hexStringToByteArray("00000000000000000000");
 
     @ParameterizedTest
     @MethodSource("provideBytes")
     public void testCorrectEncryptionAndDecryption(byte[] plaintext) throws Exception {
-        byte[] bCEnc = encryptStandard(KEY, NONCE, plaintext);
-        long strt = System.currentTimeMillis();
-        byte[] enc = ChaCha.encrypt(KEY,NONCE, plaintext, 20, 1);
+       long strt = System.currentTimeMillis();
+        byte[] enc = Trivium.encrypt(KEY,NONCE, plaintext);
         long fnsh = System.currentTimeMillis();
         PrintUtils.printBytes(enc);
         System.out.printf("Custom implementation took %d ms\n", fnsh - strt);
-        for (int i = 0; i < enc.length; i++) {
-            Assertions.assertEquals(bCEnc[i], enc[i]);
-        }
-        byte[] dec = ChaCha.decrypt(KEY, NONCE, enc, 20, 1);
+        byte[] dec = Trivium.decrypt(KEY, NONCE, enc);
         for (int i = 0; i < dec.length; i++) {
             Assertions.assertEquals(dec[i], plaintext[i]);
         }
-    }
-
-    private static byte[] encryptStandard(byte[] key, byte[] nonce, byte[] plaintext) throws Exception {
-        Cipher cipher = Cipher.getInstance("ChaCha20"); // Use "ChaCha20" for stream cipher only
-        ChaCha20ParameterSpec params = new ChaCha20ParameterSpec(nonce, 1);
-        SecretKey k = new SecretKeySpec(key, "ChaCha20");
-        cipher.init(Cipher.ENCRYPT_MODE, k, params);
-        long strt = System.currentTimeMillis();
-        byte[] ciphertext = cipher.doFinal(plaintext);
-        long end = System.currentTimeMillis();
-        System.out.printf("Standard implementation took %d\n", end-strt);
-        return ciphertext;
     }
 
     private static byte[][] provideBytes() {
